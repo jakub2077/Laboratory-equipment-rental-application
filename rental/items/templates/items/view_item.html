@@ -1,0 +1,8 @@
+{% extends 'items/base.html' %}
+
+{% block content %}
+    <h1>Item Detail</h1>
+    <p>This is: {{ item.description }}</p>
+    <p>Current status: {{ item.status }}</p>
+    <a href="{% url 'items:list-items'%}">All Items</a>
+{% endblock content %}
