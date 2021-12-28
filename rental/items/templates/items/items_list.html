@@ -1,0 +1,49 @@
+{% extends 'items/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>List of all items</h1>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">code</th>
+              <th scope="col">description</th>
+              <th scope="col">status</th>
+              <th scope="col">rented_by</th>
+              <th scope="col"> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items.items %}
+                <tr>
+                    <td>{{item.id}}</td>
+                    <td>
+                        {{item.university_number}} {{item.building_number}} {{item.faculty_number}} {{item.room_number}} {{item.item_number}}
+                    </td>
+                    <td><a href="{% url 'items:items-detail' item.id%}">{{item.description}}</a></td>
+                    <td>{{item.status}}</td>  
+                    <td>{{item.rented_by}}</td>
+                    <td>
+                        <input class="btn btn-info" type="button" value="Details" onclick="location.href='{% url 'items:items-detail' item.id %}'"/>
+                        {% if  items.teacher_permission%}
+                        <input class="btn btn-primary" type="button" value="Update" onclick="location.href='{% url 'items:items-update' item.id %}'"/>
+                        {% endif %}      
+                    </td>
+                       
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if  items.teacher_permission%}
+    <p>Add new item? <input class="btn btn-success" type="button" value="Create"onclick="location.href='{% url 'items:items-create' %}'"/> </p>
+    {% endif %}
+    
+      
+</div>
+
+
+{% endblock content %}
+
+
+

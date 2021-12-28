@@ -1,0 +1,44 @@
+{% extends 'items/base.html' %}
+
+{% block content %}
+<table class="table table-sm">
+    <thead>
+        <h3> All active rents</h3>
+        <th class="col-1">id</th>
+        <th class="col-1">Item</th>
+        <th class="col-1">User</th>
+        <th class="col-2">Rent Date</th>
+        <th class="col-2">Return Date</th>
+    </thead>
+    <tbody>
+        {% for rent in rents.active %}
+            <td>{{rent.pk}}</td>
+            <td><a href="{% url 'items:items-detail' rent.item_id %}">{{rent.item_id}}</a></td>
+            <td>{{rent.user_id}}</td>
+            <td>{{rent.rent_date}}</td>
+            <td>{{rent.return_date}}</td>
+        {% endfor %}
+    </tbody>
+</table>
+
+<table class="table table-sm">
+    <thead>
+        <h3> Archive</h3>
+        <th class="col-1">id</th>
+        <th class="col-1">Item</th>
+        <th class="col-1">User</th>
+        <th class="col-2">Rent Date</th>
+        <th class="col-2">Return Date</th>
+    </thead>
+    <tbody>
+        {% for rent in rents.archived %}
+            <td>{{rent.pk}}</td>
+            <td><a href="{% url 'items:items-detail' rent.item_id %}">{{rent.item_id}}</a></td>
+            <td>{{rent.user_id}}</td>
+            <td>{{rent.rent_date}}</td>
+            <td>{{rent.return_date}}</td>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content%}

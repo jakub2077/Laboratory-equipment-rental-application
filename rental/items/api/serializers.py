@@ -1,4 +1,5 @@
-from items.models import Item
+from items.models import Item,ItemRent
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -13,7 +14,29 @@ class ItemSerializer(serializers.ModelSerializer):
             'description',
             'status',
             'rented_by',
-            'date_rented',
-            'date_returned',
+            ]
+
+class ItemRentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ItemRent
+        fields = [
+            'item_id',
+            'user_id',
+            'rent_date',
+            'return_date',
+            'is_archived',
             ]
    
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields=[
+            'id',
+            'username',
+            'email',
+            'first_name',
+            'last_name',
+            'last_login',
+            'groups',
+        ]
+        

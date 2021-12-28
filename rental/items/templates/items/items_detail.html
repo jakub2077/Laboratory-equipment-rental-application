@@ -1,0 +1,20 @@
+{% extends 'items/base.html' %}
+
+{% block content %}
+<div class="content-section">
+    <h1>Item Detail</h1>
+    <h4>Description: <b>{{ item.description }}</b></h4>
+    <p>Status: <b>{{ item.status }}</b></p>
+    <p>University number: <b>{{item.university_number}}</b></p>
+    <p>Building number: <b>{{item.building_number}}</b></p>
+    <p>Faculty number: <b>{{item.faculty_number}}</b></p>
+    <p>Room: <b>{{item.room_number}}</b></p>
+    <p>Item number: <b>{{item.item_number}}</b></p>
+    <p>Rented by: <b>{{item.rented_by}}</b></p>
+    {% if teacher_permission %}
+        <input class="btn btn-primary" type="button" value="Update" onclick="location.href='{% url 'items:items-update' item.id %}'"/><br>
+        <br>
+    {%endif%}
+    <a href="{% url 'items:items-list'%}">All Items</a>
+</div>
+{% endblock content %}

@@ -1,7 +1,12 @@
 {% extends 'items/base.html' %}
-{% load crispy_forms_tags %}
 {% block content %}
-
-    <h1>Hi {{user.username}}, you're on your profile page</h1>
-
+    <div class="content-section">
+        <h1 class="account-heading">Account</h1>
+        <p class="text-secondary">username: <b>{{user.username}}</b></p>
+        <p class="text-secondary">Role: <b>{{role}}</b></p>
+        <p class="text-secondary">First Name: <b>{{user.first_name}}</b></p>
+        <p class="text-secondary">Last Name: <b>{{user.last_name}}</b></p>
+        <p class="text-secondary">Email: <b><a href="mailto:">{{user.email}}</a></b></p>
+        <p class="text-secondary">Last login: {{user.last_login}}</p>
+    </div>
 {% endblock %}

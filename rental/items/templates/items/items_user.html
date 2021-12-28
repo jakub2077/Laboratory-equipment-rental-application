@@ -1,0 +1,35 @@
+{% extends 'items/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>My items</h1>
+    {% if not items.user_items %}
+        <h4 class="text-secondary">No items rented </h4>
+    {%else%}
+        <table class='table'>
+        <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">description</th>
+              <th scope="col">status</th>
+              <th scope="col">rented_by</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items.user_items %}
+                {% if not item.is_archived %}
+                    <tr>
+                        <td>{{item.id}}</td>
+                        <td>{{item.description}}</td>
+                        <td>{{item.status}}</td>  
+                        <td>{{item.rented_by}}</td>     
+                    </tr>
+                {%endif%}
+            {% endfor %}
+        </tbody>
+        </table>
+    {%endif%}       
+</div>
+
+
+{% endblock content %}

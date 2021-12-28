@@ -1,10 +1,12 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 class Item(models.Model):
     ITEM_STATUS = (
         ('rented','Rented'),
-        ('pending','Pending'),
         ('available','Available'),
         ('missing','Missing'),
     )
@@ -14,15 +16,21 @@ class Item(models.Model):
     faculty_number      = models.CharField(max_length=2, null=True)
     room_number         = models.CharField(max_length=3, null=True)
     item_number         = models.CharField(max_length=3, unique=True)
-
-    # Info only
     description         = models.CharField(max_length=50)
     status              = models.CharField(choices=ITEM_STATUS, default='available', max_length=30)
-    
     rented_by           = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
-    date_rented         = models.DateTimeField('date rented', null=True)
-    date_returned       = models.DateTimeField('date returned', null=True)
 
     def __str__(self):
-        return f'{self.pk}: {self.item_number}'
+        return f'{self.item_number}'
+
+    def get_absolute_url(self):
+        return reverse("items:items-detail", kwargs={"pk": self.pk})
     
+
+class ItemRent(models.Model):
+    item_id = models.ForeignKey(Item, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    rent_date = models.DateTimeField(name='rent_date')
+    return_date = models.DateTimeField(name='return_date', null=True)
+    is_archived = models.BooleanField(default=False)
+
