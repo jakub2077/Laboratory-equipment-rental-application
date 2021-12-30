@@ -1,4 +1,5 @@
 {% load static %}
+{% load usertags %}
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -11,14 +12,16 @@
           <a class="nav-item nav-link" href="{% url 'items:items-home' %}">Home</a>
           <a class="nav-item nav-link" href="{% url 'items:items-list' %}">Items</a>
           <a class="nav-item nav-link" href="{% url 'items:rents-list' %}">Rents</a>
-          {% if user.is_staff  %}
-            <a class="nav-item nav-link" href="/api/info/">API</a>
+          {% if request.user|has_group:"admin"%}
+            <a class="nav-item nav-link" href="/admin">Admin Panel</a>
             <a class="nav-item nav-link" href="/api/items/">API-items</a>
             <a class="nav-item nav-link" href="/api/rents/">API-rents</a>
             <a class="nav-item nav-link" href="/api/users/">API-users</a>
-            <a class="nav-item nav-link" href="/api/students/">API-Students</a>
-            <a class="nav-item nav-link" href="/admin">Admin Panel</a>
           {% endif %}
+          {% if request.user|has_group:"Teacher"%}
+            <a class="nav-item nav-link" href="/api/info/">API</a>
+            <a class="nav-item nav-link" href="/api/students/">API-Students</a>
+          {%endif%}
         </div>
         <!-- Navbar Right Side -->
         <div class="navbar-nav">
