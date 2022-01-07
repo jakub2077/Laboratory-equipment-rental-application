@@ -6,6 +6,7 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = [
+            'id',
             'university_number',
             'building_number',
             'faculty_number',
@@ -20,6 +21,7 @@ class ItemRentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemRent
         fields = [
+            'id',
             'item_id',
             'user_id',
             'rent_date',

@@ -11,8 +11,8 @@ urlpatterns = [
     path('items/user/', items_views.UserItemListView.as_view(), name='items-user'),
     path('rents/', items_views.ItemRentListView.as_view(), name='rents-list'),
     path('rents/create/', items_views.ItemRentCreateView.as_view(), name='rents-create'),
-
-    path('create/', items_views.createrent, name='rents-creates'),
+    path('rents/<int:pk>/update/', items_views.ItemRentUpdateView.as_view(), name='rents-update'),
+    #path('create/', items_views.createrent, name='rents-creates'),
 
 ]
 

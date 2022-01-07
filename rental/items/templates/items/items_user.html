@@ -2,33 +2,60 @@
 
 {% block content %}
 <div class="container">
-    <h1>My items</h1>
-    {% if not items.user_items %}
-        <h4 class="text-secondary">No items rented </h4>
-    {%else%}
-        <table class='table'>
+    <h1>List of all items</h1>
+    <table class="table table-sm">
         <thead>
             <tr>
               <th scope="col">id</th>
+              <th scope="col">code</th>
               <th scope="col">description</th>
               <th scope="col">status</th>
               <th scope="col">rented_by</th>
+              <th scope="col"> 
             </tr>
         </thead>
         <tbody>
-            {% for item in items.user_items %}
-                {% if not item.is_archived %}
-                    <tr>
-                        <td>{{item.id}}</td>
-                        <td>{{item.description}}</td>
-                        <td>{{item.status}}</td>  
-                        <td>{{item.rented_by}}</td>     
-                    </tr>
-                {%endif%}
+            {% for item in items.items %}
+                <tr>
+                    <td>{{item.id}}</td>
+                    <td>
+                        {{item.university_number}} {{item.building_number}} {{item.faculty_number}} {{item.room_number}} {{item.item_number}}
+                    </td>
+                    <td>{{item.description}}</td>
+                    <td>{{item.status}}</td>  
+                    <td>{{item.rented_by}}</td>
+                    <td>
+                        <input class="btn btn-info" type="button" value="Details" onclick="location.href='{% url 'items:items-detail' item.id %}'"/>     
+                    </td>
+                       
+                </tr>
             {% endfor %}
         </tbody>
-        </table>
-    {%endif%}       
+    </table>         
+</div>
+
+<div class="container">
+    <table class="table table-sm">
+        <thead>
+            <h3> All active rents</h3>
+            <th class="col-1">id</th>
+            <th class="col-1">Item</th>
+            <th class="col-1">User</th>
+            <th class="col-2">Rent Date</th>
+            <th class="col-2">Return Date</th>
+        </thead>
+        <tbody>
+            {% for rent in items.rents %}
+            <tr>
+                <td>{{rent.pk}}</td>
+                <td><a href="{% url 'items:items-detail' rent.item_id %}">{{rent.item_id}}</a></td>
+                <td>{{rent.user_id}}</td>
+                <td>{{rent.rent_date}}</td>
+                <td>{{rent.return_date}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 

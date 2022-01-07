@@ -23,6 +23,7 @@ def getRoutes(request):
         'GET /api/token'
         'GET /api/items',
         'GET /api/items/:id',
+        'GET /api/user-items',
         'GET /api/users',
         'GET /api/users/:id',
         'GET /api/students',
@@ -71,6 +72,18 @@ class CustomAuthToken(ObtainAuthToken):
             'role': list(user.groups.values_list('name',flat=True)),
         })
 
+
+class UserItemListView(generics.ListAPIView):
+    """
+    List all items rented by request user
+    """
+    def get_queryset(self):
+        user = self.request.user
+        return Item.objects.filter(rented_by=user)
+
+    serializer_class = ItemSerializer
+    permission_classes = [DjangoModelPermissions]
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
 
 class ItemListView(generics.ListCreateAPIView):
     """
@@ -129,6 +142,15 @@ class UserDetailView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AdminPermission]
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
+
+class UserNameView(generics.RetrieveAPIView):
+    """
+    User info
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
     authentication_classes = [BasicAuthentication, TokenAuthentication]
 
         
